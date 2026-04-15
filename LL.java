@@ -1,134 +1,97 @@
-class LL { 
- 
-   Node head; 
-   private int size; 
- 
-   LL () { 
-       size = 0; 
-   } 
- 
-   public class Node { 
-       String data; 
-       Node next; 
- 
-       Node(String data) { 
-           this.data = data; 
-           this.next = null; 
-           size++; 
-       } 
-   } 
- 
-   public void addFirst(String data) { 
-       Node newNode = new Node(data); 
-       newNode.next = head;
-       head = newNode;
-   }
-   public void addLast(String data) { 
-       Node newNode = new Node(data); 
- 
-       if(head == null) { 
-           head = newNode; 
-           return; 
-       } 
- 
-       Node lastNode = head; 
-       while(lastNode.next != null) { 
-           lastNode = lastNode.next; 
-       } 
- 
-       lastNode.next = newNode; 
-   } 
- 
-   public void printList() { 
-       Node currNode = head; 
- 
-       while(currNode != null) { 
-           System.out.print(currNode.data+" -> "); 
-           currNode = currNode.next;
-       }
-       System.out.println("null");
+class LL{
+    Node head;
+    //size is created to see size of the list
+    private int size;
+    //this is the constructor which initializes size with 0
+    LL(){
+        this.size=0;
     }
-    public void removeFirst() { 
-       if(head == null) { 
-           System.out.println("Empty List, nothing to delete"); 
-           return; 
-       } 
- 
-       head = this.head.next; 
-       size--; 
-   } 
- 
-   public void removeLast() { 
-       if(head == null) { 
-           System.out.println("Empty List, nothing to delete"); 
-           return; 
-       } 
- 
-       size--; 
-       if(head.next == null) { 
-           head = null; 
-           return; 
-       } 
- 
-       Node currNode = head; 
-       Node lastNode = head.next;
-       while(lastNode.next != null) { 
-           currNode = currNode.next; 
-           lastNode = lastNode.next; 
-       } 
- 
-       currNode.next = null; 
-   } 
- 
-   public int getSize() { 
-       return size; 
-   } 
-   
-   public void reverseList(){
-    if(head== null || head.next==null){
-        return;
+    class Node{
+        int data;
+        Node next;
+
+        Node(int data){
+            this.data=data;
+            this.next=null;
+            size++;
+        }
     }
-    Node prevNode= head;
-    Node currNode= head.next;
-    while(currNode != null){
-        Node nextNode= currNode.next;
-        currNode.next=prevNode;
-        currNode=nextNode;
+    //to add first
+    public void addFirst(int data){
+        Node newNode = new Node(data);
+        if(head==null){
+            head=newNode;
+            return;
+        }
+        newNode.next=head;
+        head=newNode;
+        
     }
-    head.next=null;
-    head=prevNode;
-   }
-   public Node reverseListRecursive(Node head) {
-       //empty node || last node or only one node
-       if(head == null || head.next == null) {
-           return head;
-       }
-
-
-       Node newHead = reverseListRecursive(head.next);
-      
-       head.next.next = head;
-       head.next = null;
-       return newHead;
-   }
-
- 
- 
-   public static void main(String args[]) { 
-       LL list = new LL(); 
-       list.addLast("is"); 
-       list.addLast("a"); 
-       list.addLast("list"); 
-       list.printList(); 
- 
-       list.addFirst("this"); 
-       list.printList(); 
-       System.out.println(list.getSize());  
- 
-       list.removeFirst(); 
-       list.printList();
-       list.removeLast(); 
-       list.printList();
-       list.addFirst("th");
-   }
+    //to add in last
+    public void addLast(int data){
+        Node newNode = new Node(data);
+        if(head==null){
+            head=newNode;
+            return;
+        }
+        Node currNode= head;
+        while(currNode.next != null){
+            currNode=currNode.next;
+        }
+        currNode.next=newNode;
+    }
+    //to print
+    public void printList(){
+        if(head==null){
+            System.out.println("List is empty");
+            return;
+        }
+        Node currNode= head;
+        while(currNode != null){
+            System.out.print(currNode.data + " --> ");
+            currNode=currNode.next;
+        }
+        System.out.println("NULL");
+    }
+    public void deleteFirst(){
+        if(head==null){
+            System.out.println("The list is empty");
+            return;
+        }
+        size--;
+        head=head.next;
+    }
+    public void deleteLast(){
+        if(head==null){
+            System.out.println("The list is empty");
+            return;
+        }
+        size--; // yahen pe likhenge verna eske nechew wale case skip ho jayenge 
+        if(head.next==null){
+            head=null;
+            return;
+        }
+        Node secondLast = head;
+        Node lastNode=head.next;
+        while(lastNode.next!=null){
+            lastNode=lastNode.next;
+            secondLast=secondLast.next;
+        }
+        secondLast.next=null;
+    }
+    public int getsize(){
+        return size;
+    }
+    public static void main(String[] args) {
+        LL list=new LL();
+        list.addFirst(2);
+        list.addFirst(3);
+        list.addLast(103);
+        list.printList();
+        list.deleteFirst();
+        list.printList();
+        list.deleteLast();
+        list.printList();
+        System.out.println(list.getsize());
+    }
 }
